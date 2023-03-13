@@ -21,7 +21,7 @@ Currently, the following formats are supported:
 
 Just add the crate:
 
-```
+```bash
 cargo add universal-config
 ```
 
@@ -37,7 +37,7 @@ features = ["json", "toml"]
 
 ## Example usage
 
-```rust
+```no_run
 use universal_config::ConfigLoader;
 use serde::Deserialize;
 
@@ -47,7 +47,7 @@ struct MyConfig {
 }
 
 fn main() {
-    let config: MyConfig = ConfigLoader::new("my-app").find_and_load();
+    let config: MyConfig = ConfigLoader::new("my-app").find_and_load().unwrap();
     println!("{}", config.foo);
 }
 ```
