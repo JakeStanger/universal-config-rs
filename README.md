@@ -38,7 +38,7 @@ features = ["json", "toml"]
 ## Example usage
 
 ```rust
-use universal_config::Config;
+use universal_config::ConfigLoader;
 use serde::Deserialize;
 
 #[derive(Deserialize)]
@@ -47,7 +47,9 @@ struct MyConfig {
 }
 
 fn main() {
-    let config: MyConfig = Config::new("my-app").find_and_load();
+    let config: MyConfig = ConfigLoader::new("my-app").find_and_load();
     println!("{}", config.foo);
 }
 ```
+
+For more advanced usage, please check the [docs](https://docs.rs/universal-config).
