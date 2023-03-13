@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 mod error;
 
 use crate::error::{Deserialization as DeserializationError, Result, UniversalConfig as Error};
@@ -7,18 +9,35 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use tracing::debug;
 
+/// Supported config formats.
 pub enum Format {
+    /// `.json` file
     Json,
+    /// `.yaml` or `.yml` files.
     Yaml,
+    /// `.toml` files.
     Toml,
+    /// `.corn` files.
     Corn,
 }
 
-/// Config
+/// The main loader struct.
+///
+/// Create a new loader and configure as appropriate
+/// to load your config file.
 pub struct ConfigLoader<'a> {
+    /// The name of your program, used when determining the directory path.
     app_name: &'a str,
+    /// The name of the file (*excluding* extension) to search for.
+    /// Defaults to `config`.
     file_name: &'a str,
+    /// Allowed file formats.
+    /// Defaults to all formats.
+    /// Set to disable formats you do not wish to allow.
     formats: &'a [Format],
+    /// The directory to load the config file from.
+    /// Defaults to your system config dir (`$XDG_CONFIG_DIR` on Linux),
+    /// or your home dir if that does not exist.
     config_dir: Option<&'a str>,
 }
 
@@ -123,6 +142,7 @@ impl<'a> ConfigLoader<'a> {
         Ok(config)
     }
 
+    /// Gets a list of supported and enabled file extensions.
     fn get_extensions(&self) -> Vec<&'static str> {
         let mut extensions = vec![];
 
