@@ -12,10 +12,11 @@ Instead, it just deals with loading the file.
 
 Currently, the following formats are supported:
 
-- JSON
-- YAML
-- TOML
-- [Corn](https://github.com/jakestanger/corn)
+- JSON via `serde_json`
+- YAML via `serde_yaml`
+- TOML via `toml`
+- XML via `serde_xml_rs`
+- [Corn](https://github.com/jakestanger/corn) via `libcorn`
 
 # Installation
 

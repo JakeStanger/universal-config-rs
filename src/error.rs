@@ -24,6 +24,8 @@ pub enum Deserialization {
     Toml(#[from] toml::de::Error),
     #[error(transparent)]
     Corn(#[from] libcorn::error::Error),
+    #[error(transparent)]
+    Xml(#[from] serde_xml_rs::Error),
     #[error("unsupported file extension: '{0}'")]
     UnsupportedExtension(String),
 }
