@@ -16,14 +16,23 @@ pub enum UniversalConfig {
 
 #[derive(Error, Debug)]
 pub enum Deserialization {
+    #[cfg(feature = "json")]
     #[error(transparent)]
     Json(#[from] serde_json::Error),
+
+    #[cfg(feature = "yaml")]
     #[error(transparent)]
     Yaml(#[from] serde_yaml::Error),
+
+    #[cfg(feature = "toml")]
     #[error(transparent)]
     Toml(#[from] toml::de::Error),
+
+    #[cfg(feature = "corn")]
     #[error(transparent)]
     Corn(#[from] libcorn::error::Error),
+
+    #[cfg(feature = "xml")]
     #[error(transparent)]
     Xml(#[from] serde_xml_rs::Error),
     #[error("unsupported file extension: '{0}'")]
