@@ -19,6 +19,8 @@ pub enum Format {
     Toml,
     /// `.corn` files.
     Corn,
+    /// `.xml` files.
+    Xml,
 }
 
 /// The main loader struct.
@@ -49,7 +51,13 @@ impl<'a> ConfigLoader<'a> {
         Self {
             app_name,
             file_name: "config",
-            formats: &[Format::Json, Format::Yaml, Format::Toml, Format::Corn],
+            formats: &[
+                Format::Json,
+                Format::Yaml,
+                Format::Toml,
+                Format::Corn,
+                Format::Xml,
+            ],
             config_dir: None,
         }
     }
@@ -155,6 +163,7 @@ impl<'a> ConfigLoader<'a> {
                 }
                 Format::Toml => extensions.push("toml"),
                 Format::Corn => extensions.push("corn"),
+                Format::Xml => extensions.push("xml"),
             }
         }
 
@@ -176,6 +185,8 @@ impl<'a> ConfigLoader<'a> {
             "yaml" | "yml" => serde_yaml::from_str(str).map_err(DeserializationError::from),
             #[cfg(feature = "corn")]
             "corn" => libcorn::from_str(str).map_err(DeserializationError::from),
+            #[cfg(feature = "xml")]
+            "xml" => serde_xml_rs::from_str(str).map_err(DeserializationError::from),
             _ => Err(DeserializationError::UnsupportedExtension(
                 extension.to_string(),
             )),
@@ -216,6 +227,12 @@ mod tests {
     #[test]
     fn test_corn() {
         let res: ConfigContents = ConfigLoader::load("test_configs/config.corn").unwrap();
+        assert_eq!(res.test, "hello world")
+    }
+
+    #[test]
+    fn test_xml() {
+        let res: ConfigContents = ConfigLoader::load("test_configs/config.xml").unwrap();
         assert_eq!(res.test, "hello world")
     }
 
