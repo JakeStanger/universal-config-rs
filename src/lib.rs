@@ -315,7 +315,7 @@ mod tests {
 
     #[test]
     fn test_find_load() {
-        let mut config = ConfigLoader::new("universal-config");
+        let config = ConfigLoader::new("universal-config");
         let res: ConfigContents = config
             .with_config_dir("test_configs")
             .find_and_load()
