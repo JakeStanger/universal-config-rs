@@ -4,11 +4,11 @@
 [docs](https://docs.rs/universal-config) | 
 [repo](https://github.com/jakestanger/universal-config-rs)
 
-Universal Config is a library for Rust to simplify *reading* configuration files.
+Universal Config is a library for Rust to simplify reading and writing configuration files.
 It is able to automatically locate config files from standard locations, and has support for various file formats.
 
 The crate does not offer a lot of functionality, leaving that to Serde and your implementation. 
-Instead, it just deals with loading the file.
+Instead, it just deals with loading and saving the file.
 
 Currently, the following formats are supported:
 
