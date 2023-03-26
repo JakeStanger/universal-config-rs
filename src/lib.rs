@@ -12,14 +12,19 @@ use tracing::debug;
 /// Supported config formats.
 pub enum Format {
     /// `.json` file
+    #[cfg(feature = "json")]
     Json,
     /// `.yaml` or `.yml` files.
+    #[cfg(feature = "yaml")]
     Yaml,
     /// `.toml` files.
+    #[cfg(feature = "toml")]
     Toml,
     /// `.corn` files.
+    #[cfg(feature = "corn")]
     Corn,
     /// `.xml` files.
+    #[cfg(feature = "xml")]
     Xml,
 }
 
@@ -52,10 +57,15 @@ impl<'a> ConfigLoader<'a> {
             app_name,
             file_name: "config",
             formats: &[
+                #[cfg(feature = "json")]
                 Format::Json,
+                #[cfg(feature = "yaml")]
                 Format::Yaml,
+                #[cfg(feature = "toml")]
                 Format::Toml,
+                #[cfg(feature = "corn")]
                 Format::Corn,
+                #[cfg(feature = "xml")]
                 Format::Xml,
             ],
             config_dir: None,
@@ -156,13 +166,18 @@ impl<'a> ConfigLoader<'a> {
 
         for format in self.formats {
             match format {
+                #[cfg(feature = "json")]
                 Format::Json => extensions.push("json"),
+                #[cfg(feature = "yaml")]
                 Format::Yaml => {
                     extensions.push("yaml");
                     extensions.push("yml");
                 }
+                #[cfg(feature = "toml")]
                 Format::Toml => extensions.push("toml"),
+                #[cfg(feature = "corn")]
                 Format::Corn => extensions.push("corn"),
+                #[cfg(feature = "xml")]
                 Format::Xml => extensions.push("xml"),
             }
         }
