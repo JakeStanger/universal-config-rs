@@ -2,9 +2,13 @@
 
 mod error;
 
-use crate::error::{Deserialization as DeserializationError, Result, UniversalConfig as Error};
+use crate::error::{
+    DeserializationError, Result, SerializationError, UniversalConfigError as Error,
+    UniversalConfigError,
+};
 use dirs::{config_dir, home_dir};
 use serde::de::DeserializeOwned;
+use serde::Serialize;
 use std::fs;
 use std::path::{Path, PathBuf};
 use tracing::debug;
@@ -26,6 +30,23 @@ pub enum Format {
     /// `.xml` files.
     #[cfg(feature = "xml")]
     Xml,
+}
+
+impl Format {
+    const fn extension(&self) -> &str {
+        match self {
+            #[cfg(feature = "json")]
+            Self::Json => "json",
+            #[cfg(feature = "yaml")]
+            Self::Yaml => "yaml",
+            #[cfg(feature = "toml")]
+            Self::Toml => "toml",
+            #[cfg(feature = "corn")]
+            Self::Corn => "corn",
+            #[cfg(feature = "xml")]
+            Self::Xml => "xml",
+        }
+    }
 }
 
 /// The main loader struct.
@@ -110,16 +131,20 @@ impl<'a> ConfigLoader<'a> {
         Self::load(&file)
     }
 
+    /// Attempts to find the directory in which the config file is stored.
+    fn get_config_dir(&self) -> std::result::Result<PathBuf, UniversalConfigError> {
+        self.config_dir
+            .map(Into::into)
+            .or_else(|| config_dir().map(|dir| dir.join(self.app_name)))
+            .or_else(|| home_dir().map(|dir| dir.join(format!(".{}", self.app_name))))
+            .ok_or(Error::MissingUserDir)
+    }
+
     /// Attempts to find a config file for the given app name
     /// in the app's config directory
     /// that matches any of the allowed formats.
     fn try_find_file(&self) -> Result<PathBuf> {
-        let config_dir = self
-            .config_dir
-            .map(Into::into)
-            .or_else(|| config_dir().map(|dir| dir.join(self.app_name)))
-            .or_else(|| home_dir().map(|dir| dir.join(format!(".{}", self.app_name))))
-            .ok_or(Error::MissingUserDir)?;
+        let config_dir = self.get_config_dir()?;
 
         let extensions = self.get_extensions();
 
@@ -208,6 +233,43 @@ impl<'a> ConfigLoader<'a> {
         }?;
 
         Ok(res)
+    }
+
+    /// Saves the provided configuration into a file of the specified format.
+    ///
+    /// The file is stored in the app's configuration directory.
+    /// Directories are automatically created if required.
+    ///
+    /// # Errors
+    ///
+    /// If the provided config cannot be serialised into the format, an error will be returned.
+    /// The `.corn` format is not supported, and the function will error if specified.
+    ///
+    /// If a valid config dir cannot be found, an error will be returned.
+    ///
+    /// If the file cannot be written to the specified path, an error will be returned.
+    pub fn save<T: Serialize>(&self, config: &T, format: &Format) -> Result<()> {
+        let str = match format {
+            #[cfg(feature = "json")]
+            Format::Json => serde_json::to_string_pretty(config).map_err(SerializationError::from),
+            #[cfg(feature = "yaml")]
+            Format::Yaml => serde_yaml::to_string(config).map_err(SerializationError::from),
+            #[cfg(feature = "toml")]
+            Format::Toml => toml::to_string_pretty(config).map_err(SerializationError::from),
+            #[cfg(feature = "corn")]
+            Format::Corn => Err(SerializationError::UnsupportedExtension("corn".to_string())),
+            #[cfg(feature = "xml")]
+            Format::Xml => serde_xml_rs::to_string(config).map_err(SerializationError::from),
+        }?;
+
+        let config_dir = self.get_config_dir()?;
+        let file_name = format!("{}.{}", self.file_name, format.extension());
+        let full_path = config_dir.join(file_name);
+
+        fs::create_dir_all(config_dir)?;
+        fs::write(full_path, str)?;
+
+        Ok(())
     }
 }
 
