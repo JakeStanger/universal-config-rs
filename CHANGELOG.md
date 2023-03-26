@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.3.0] - 2023-03-26
+### :sparkles: New Features
+- [`8b2e99b`](https://github.com/JakeStanger/universal-config-rs/commit/8b2e99b1a1ef80bc348bc39652b7443487df400e) - ability to save config files as a specified format *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+### :bug: Bug Fixes
+- [`6e11e71`](https://github.com/JakeStanger/universal-config-rs/commit/6e11e712e0b74ab2d24327e9c07b6e28f17e54d3) - build errors when compilation flags disabled *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+- [`5d94a71`](https://github.com/JakeStanger/universal-config-rs/commit/5d94a7100c6e428f73dbdf19e14035a7a649e651) - loader ignoring custom file name *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+- [`007e378`](https://github.com/JakeStanger/universal-config-rs/commit/007e3781e5235f1f6cfb867e8c917f386e8b238e) - unable to chain builder methods *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+### :white_check_mark: Tests
+- [`459f559`](https://github.com/JakeStanger/universal-config-rs/commit/459f5592b6445e8b121027f50f6de8f8def30e04) - fix compiler warning *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+### :memo: Documentation Changes
+- [`87dd70c`](https://github.com/JakeStanger/universal-config-rs/commit/87dd70c1f06d6c964dc30fdaf943594382ce785e) - update CHANGELOG.md for v0.2.1 [skip ci] *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+- [`928967f`](https://github.com/JakeStanger/universal-config-rs/commit/928967f36ef714481b5dd76a8d9eca67a0cd4c5b) - **readme**: update to include saving info *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+
 ## [v0.2.1] - 2023-03-19
 ### :bug: Bug Fixes
 - [`c1641c9`](https://github.com/JakeStanger/universal-config-rs/commit/c1641c9513cd19c5be0c67c26409ae0e0d42f08b) - compile errors when default features disabled *(commit by [@JakeStanger](https://github.com/JakeStanger))*
@@ -31,3 +48,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.1.1]: https://github.com/JakeStanger/universal-config-rs/compare/v0.1.0...v0.1.1
 [v0.2.0]: https://github.com/JakeStanger/universal-config-rs/compare/v0.1.1...v0.2.0
 [v0.2.1]: https://github.com/JakeStanger/universal-config-rs/compare/v0.2.0...v0.2.1
+[v0.3.0]: https://github.com/JakeStanger/universal-config-rs/compare/v0.2.1...v0.3.0
