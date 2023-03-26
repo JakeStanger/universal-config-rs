@@ -126,7 +126,7 @@ impl<'a> ConfigLoader<'a> {
         debug!("Using config dir: {}", config_dir.display());
 
         let file = extensions.into_iter().find_map(|extension| {
-            let full_path = config_dir.join(format!("config.{extension}"));
+            let full_path = config_dir.join(format!("{}.{extension}", self.file_name));
 
             if Path::exists(&full_path) {
                 Some(full_path)
