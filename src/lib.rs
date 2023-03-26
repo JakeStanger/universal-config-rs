@@ -75,7 +75,7 @@ impl<'a> ConfigLoader<'a> {
     /// Specifies the file name to look for, excluding the extension.
     ///
     /// If not specified, defaults to "config".
-    pub fn with_file_name(&mut self, file_name: &'a str) -> &Self {
+    pub fn with_file_name(mut self, file_name: &'a str) -> Self {
         self.file_name = file_name;
         self
     }
@@ -84,7 +84,7 @@ impl<'a> ConfigLoader<'a> {
     ///
     /// If not specified, all formats are checked for
     /// in the order JSON, YAML, TOML, Corn.
-    pub fn with_formats(&mut self, formats: &'a [Format]) -> &Self {
+    pub fn with_formats(mut self, formats: &'a [Format]) -> Self {
         self.formats = formats;
         self
     }
@@ -93,7 +93,7 @@ impl<'a> ConfigLoader<'a> {
     ///
     /// If not specified, loads from `$XDG_CONFIG_DIR/<app_name>`
     /// or `$HOME/.<app_name>` if the config dir does not exist.
-    pub fn with_config_dir(&mut self, dir: &'a str) -> &Self {
+    pub fn with_config_dir(mut self, dir: &'a str) -> Self {
         self.config_dir = Some(dir);
         self
     }
