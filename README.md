@@ -17,6 +17,7 @@ Currently, the following formats are supported:
 - TOML via `toml`
 - XML via `serde_xml_rs`
 - [Corn](https://github.com/jakestanger/corn) via `libcorn`
+- [Ron](https://github.com/ron-rs/ron) via `ron`
 
 # Installation
 
