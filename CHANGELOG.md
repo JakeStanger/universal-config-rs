@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.4.0] - 2023-05-03
+### :sparkles: New Features
+- [`452943b`](https://github.com/JakeStanger/universal-config-rs/commit/452943bcf091751e48020a2c038396cada761c20) - ron support *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+### :recycle: Refactors
+- [`bdeb8f9`](https://github.com/JakeStanger/universal-config-rs/commit/bdeb8f9f72c36e0d1d98f2e5af4579557326a387) - fix clippy warnings *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+### :memo: Documentation Changes
+- [`27b197a`](https://github.com/JakeStanger/universal-config-rs/commit/27b197ac47d3ec8c4bc3fd97b0040e402ab66e4a) - update CHANGELOG.md for v0.3.0 [skip ci] *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+
 ## [v0.3.0] - 2023-03-26
 ### :sparkles: New Features
 - [`8b2e99b`](https://github.com/JakeStanger/universal-config-rs/commit/8b2e99b1a1ef80bc348bc39652b7443487df400e) - ability to save config files as a specified format *(commit by [@JakeStanger](https://github.com/JakeStanger))*
@@ -49,3 +60,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.2.0]: https://github.com/JakeStanger/universal-config-rs/compare/v0.1.1...v0.2.0
 [v0.2.1]: https://github.com/JakeStanger/universal-config-rs/compare/v0.2.0...v0.2.1
 [v0.3.0]: https://github.com/JakeStanger/universal-config-rs/compare/v0.2.1...v0.3.0
+[v0.4.0]: https://github.com/JakeStanger/universal-config-rs/compare/v0.3.0...v0.4.0
