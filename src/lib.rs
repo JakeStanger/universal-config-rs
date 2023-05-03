@@ -30,6 +30,9 @@ pub enum Format {
     /// `.xml` files.
     #[cfg(feature = "xml")]
     Xml,
+    /// `.ron` files.
+    #[cfg(feature = "ron")]
+    Ron,
 }
 
 impl Format {
@@ -45,6 +48,8 @@ impl Format {
             Self::Corn => "corn",
             #[cfg(feature = "xml")]
             Self::Xml => "xml",
+            #[cfg(feature = "ron")]
+            Self::Ron => "ron",
         }
     }
 }
@@ -88,6 +93,8 @@ impl<'a> ConfigLoader<'a> {
                 Format::Corn,
                 #[cfg(feature = "xml")]
                 Format::Xml,
+                #[cfg(feature = "ron")]
+                Format::Ron,
             ],
             config_dir: None,
         }
@@ -204,6 +211,8 @@ impl<'a> ConfigLoader<'a> {
                 Format::Corn => extensions.push("corn"),
                 #[cfg(feature = "xml")]
                 Format::Xml => extensions.push("xml"),
+                #[cfg(feature = "ron")]
+                Format::Ron => extensions.push("ron"),
             }
         }
 
@@ -227,6 +236,8 @@ impl<'a> ConfigLoader<'a> {
             "corn" => libcorn::from_str(str).map_err(DeserializationError::from),
             #[cfg(feature = "xml")]
             "xml" => serde_xml_rs::from_str(str).map_err(DeserializationError::from),
+            #[cfg(feature = "ron")]
+            "ron" => ron::from_str(str).map_err(DeserializationError::from),
             _ => Err(DeserializationError::UnsupportedExtension(
                 extension.to_string(),
             )),
@@ -260,6 +271,8 @@ impl<'a> ConfigLoader<'a> {
             Format::Corn => Err(SerializationError::UnsupportedExtension("corn".to_string())),
             #[cfg(feature = "xml")]
             Format::Xml => serde_xml_rs::to_string(config).map_err(SerializationError::from),
+            #[cfg(feature = "ron")]
+            Format::Ron => ron::to_string(config).map_err(SerializationError::from),
         }?;
 
         let config_dir = self.get_config_dir()?;
@@ -310,6 +323,12 @@ mod tests {
     #[test]
     fn test_xml() {
         let res: ConfigContents = ConfigLoader::load("test_configs/config.xml").unwrap();
+        assert_eq!(res.test, "hello world")
+    }
+
+    #[test]
+    fn test_ron() {
+        let res: ConfigContents = ConfigLoader::load("test_configs/config.ron").unwrap();
         assert_eq!(res.test, "hello world")
     }
 

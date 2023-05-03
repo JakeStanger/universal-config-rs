@@ -37,6 +37,11 @@ pub enum DeserializationError {
     #[cfg(feature = "xml")]
     #[error(transparent)]
     Xml(#[from] serde_xml_rs::Error),
+
+    #[cfg(feature = "ron")]
+    #[error(transparent)]
+    Ron(#[from] ron::de::SpannedError),
+
     #[error("unsupported file extension: '{0}'")]
     UnsupportedExtension(String),
 }
@@ -62,6 +67,11 @@ pub enum SerializationError {
     #[cfg(feature = "xml")]
     #[error(transparent)]
     Xml(#[from] serde_xml_rs::Error),
+
+    #[cfg(feature = "ron")]
+    #[error(transparent)]
+    Ron(#[from] ron::Error),
+
     #[error("unsupported file extension: '{0}'")]
     UnsupportedExtension(String),
 }

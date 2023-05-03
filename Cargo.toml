@@ -7,7 +7,7 @@ license = "MIT"
 keywords = ["config", "serde"]
 
 [features]
-default = ["json", "yaml", "toml", "corn", "xml"]
+default = ["json", "yaml", "toml", "corn", "xml", "ron"]
 
 # aliases
 # toml does not need to be explicitly included as the dep provides a feature
@@ -28,3 +28,4 @@ serde_yaml = { version = "0.9.19", optional = true }
 toml = { version = "0.7.2", optional = true }
 libcorn = { version = "0.6.1", optional = true }
 serde-xml-rs = { version = "0.6.0", optional = true }
+ron = { version = "0.8.0", optional = true }
