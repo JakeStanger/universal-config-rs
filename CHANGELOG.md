@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.4.2] - 2023-07-03
+### :memo: Documentation Changes
+- [`5b795c9`](https://github.com/JakeStanger/universal-config-rs/commit/5b795c9038cca0d5d81566f2a11f7081a7d2b9cb) - update CHANGELOG.md for v0.4.1 [skip ci] *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+
 ## [v0.4.1] - 2023-06-05
 ### :memo: Documentation Changes
 - [`108b9f2`](https://github.com/JakeStanger/universal-config-rs/commit/108b9f29484ea023add4964394cce3d485404f37) - update CHANGELOG.md for v0.4.0 [skip ci] *(commit by [@JakeStanger](https://github.com/JakeStanger))*
@@ -67,3 +72,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.3.0]: https://github.com/JakeStanger/universal-config-rs/compare/v0.2.1...v0.3.0
 [v0.4.0]: https://github.com/JakeStanger/universal-config-rs/compare/v0.3.0...v0.4.0
 [v0.4.1]: https://github.com/JakeStanger/universal-config-rs/compare/v0.4.0...v0.4.1
+[v0.4.2]: https://github.com/JakeStanger/universal-config-rs/compare/v0.4.1...v0.4.2
