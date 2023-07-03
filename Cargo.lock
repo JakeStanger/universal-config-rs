@@ -136,16 +136,15 @@ checksum = "fc86cde3ff845662b8f4ef6cb50ea0e20c524eb3d29ae048287e06a1b3fa6a81"
 
 [[package]]
 name = "libcorn"
-version = "0.7.0"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "236bf92c4508223a0de1932ba75fee7f487ed833e0f3eefa207fac76f3f6c1d0"
+checksum = "a60c31be9f9db3b90d3d8da252357c5acb20af985843db75ed6223b5bf1bec60"
 dependencies = [
  "cfg-if",
  "pest",
  "pest_derive",
  "serde",
  "thiserror",
- "toml 0.5.11",
 ]
 
 [[package]]
@@ -386,15 +385,6 @@ dependencies = [
 
 [[package]]
 name = "toml"
-version = "0.5.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f4f7f0dd8d50a853a531c426359045b1998f04219d88799810762cd4ad314234"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "toml"
 version = "0.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d6135d499e69981f9ff0ef2167955a5333c35e36f6937d382974566b3d5b94ec"
@@ -489,7 +479,7 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "thiserror",
- "toml 0.7.4",
+ "toml",
  "tracing",
 ]
 
