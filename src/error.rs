@@ -32,7 +32,7 @@ pub enum DeserializationError {
 
     #[cfg(feature = "corn")]
     #[error(transparent)]
-    Corn(#[from] libcorn::error::Error),
+    Corn(#[from] corn::error::Error),
 
     #[cfg(feature = "xml")]
     #[error(transparent)]
@@ -62,7 +62,7 @@ pub enum SerializationError {
 
     #[cfg(feature = "corn")]
     #[error(transparent)]
-    Corn(#[from] libcorn::error::Error),
+    Corn(#[from] corn::error::Error),
 
     #[cfg(feature = "xml")]
     #[error(transparent)]

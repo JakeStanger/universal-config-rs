@@ -236,7 +236,7 @@ impl<'a> ConfigLoader<'a> {
             #[cfg(feature = "yaml")]
             "yaml" | "yml" => serde_yaml::from_str(str).map_err(DeserializationError::from),
             #[cfg(feature = "corn")]
-            "corn" => libcorn::from_str(str).map_err(DeserializationError::from),
+            "corn" => corn::from_str(str).map_err(DeserializationError::from),
             #[cfg(feature = "xml")]
             "xml" => serde_xml_rs::from_str(str).map_err(DeserializationError::from),
             #[cfg(feature = "ron")]
