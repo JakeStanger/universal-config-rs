@@ -142,7 +142,11 @@ impl<'a> ConfigLoader<'a> {
     }
 
     /// Attempts to find the directory in which the config file is stored.
-    fn get_config_dir(&self) -> std::result::Result<PathBuf, UniversalConfigError> {
+    ///
+    /// # Errors
+    ///
+    /// Will error if the user's home directory cannot be located.
+    pub fn config_dir(&self) -> std::result::Result<PathBuf, UniversalConfigError> {
         self.config_dir
             .map(Into::into)
             .or_else(|| config_dir().map(|dir| dir.join(self.app_name)))
@@ -154,7 +158,7 @@ impl<'a> ConfigLoader<'a> {
     /// in the app's config directory
     /// that matches any of the allowed formats.
     fn try_find_file(&self) -> Result<PathBuf> {
-        let config_dir = self.get_config_dir()?;
+        let config_dir = self.config_dir()?;
 
         let extensions = self.get_extensions();
 
@@ -278,7 +282,7 @@ impl<'a> ConfigLoader<'a> {
             Format::Ron => ron::to_string(config).map_err(SerializationError::from),
         }?;
 
-        let config_dir = self.get_config_dir()?;
+        let config_dir = self.config_dir()?;
         let file_name = format!("{}.{}", self.file_name, format.extension());
         let full_path = config_dir.join(file_name);
 
