@@ -42,6 +42,10 @@ pub enum DeserializationError {
     #[error(transparent)]
     Ron(#[from] ron::de::SpannedError),
 
+    #[cfg(feature = "kdl")]
+    #[error(transparent)]
+    Kdl(#[from] kaydle::serde::de::Error),
+
     #[error("unsupported file extension: '{0}'")]
     UnsupportedExtension(String),
 }
