@@ -33,6 +33,9 @@ pub enum Format {
     /// `.ron` files.
     #[cfg(feature = "ron")]
     Ron,
+    /// `.kdl` files
+    #[cfg(feature = "kdl")]
+    Kdl,
 }
 
 impl Format {
@@ -50,6 +53,8 @@ impl Format {
             Self::Xml => "xml",
             #[cfg(feature = "ron")]
             Self::Ron => "ron",
+            #[cfg(feature = "kdl")]
+            Self::Kdl => "kdl",
         }
     }
 }
@@ -95,6 +100,8 @@ impl<'a> ConfigLoader<'a> {
                 Format::Xml,
                 #[cfg(feature = "ron")]
                 Format::Ron,
+                #[cfg(feature = "kdl")]
+                Format::Kdl,
             ],
             config_dir: None,
         }
@@ -220,6 +227,8 @@ impl<'a> ConfigLoader<'a> {
                 Format::Xml => extensions.push("xml"),
                 #[cfg(feature = "ron")]
                 Format::Ron => extensions.push("ron"),
+                #[cfg(feature = "kdl")]
+                Format::Kdl => extensions.push("kdl"),
             }
         }
 
@@ -245,6 +254,8 @@ impl<'a> ConfigLoader<'a> {
             "xml" => serde_xml_rs::from_str(str).map_err(DeserializationError::from),
             #[cfg(feature = "ron")]
             "ron" => ron::from_str(str).map_err(DeserializationError::from),
+            #[cfg(feature = "kdl")]
+            "kdl" => kaydle::serde::from_str(str).map_err(DeserializationError::from),
             _ => Err(DeserializationError::UnsupportedExtension(
                 extension.to_string(),
             )),
@@ -280,6 +291,8 @@ impl<'a> ConfigLoader<'a> {
             Format::Xml => serde_xml_rs::to_string(config).map_err(SerializationError::from),
             #[cfg(feature = "ron")]
             Format::Ron => ron::to_string(config).map_err(SerializationError::from),
+            #[cfg(feature = "ron")]
+            Format::Kdl => Err(SerializationError::UnsupportedExtension("kdl".to_string())),
         }?;
 
         let config_dir = self.config_dir()?;
@@ -336,6 +349,12 @@ mod tests {
     #[test]
     fn test_ron() {
         let res: ConfigContents = ConfigLoader::load("test_configs/config.ron").unwrap();
+        assert_eq!(res.test, "hello world")
+    }
+
+    #[test]
+    fn test_kdl() {
+        let res: ConfigContents = ConfigLoader::load("test_configs/config.kdl").unwrap();
         assert_eq!(res.test, "hello world")
     }
 
