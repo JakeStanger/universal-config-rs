@@ -291,7 +291,7 @@ impl<'a> ConfigLoader<'a> {
             Format::Xml => serde_xml_rs::to_string(config).map_err(SerializationError::from),
             #[cfg(feature = "ron")]
             Format::Ron => ron::to_string(config).map_err(SerializationError::from),
-            #[cfg(feature = "ron")]
+            #[cfg(feature = "kdl")]
             Format::Kdl => Err(SerializationError::UnsupportedExtension("kdl".to_string())),
         }?;
 
