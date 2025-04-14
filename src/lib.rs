@@ -40,7 +40,7 @@ pub enum Format {
 
 impl Format {
     const fn extension(&self) -> &str {
-        match self {
+        match *self {
             #[cfg(feature = "json")]
             Self::Json => "json",
             #[cfg(feature = "yaml")]
@@ -211,7 +211,7 @@ impl<'a> ConfigLoader<'a> {
         let mut extensions = vec![];
 
         for format in self.formats {
-            match format {
+            match *format {
                 #[cfg(feature = "json")]
                 Format::Json => extensions.push("json"),
                 #[cfg(feature = "yaml")]
@@ -278,7 +278,7 @@ impl<'a> ConfigLoader<'a> {
     ///
     /// If the file cannot be written to the specified path, an error will be returned.
     pub fn save<T: Serialize>(&self, config: &T, format: &Format) -> Result<()> {
-        let str = match format {
+        let str: std::result::Result<String, SerializationError> = match *format {
             #[cfg(feature = "json")]
             Format::Json => serde_json::to_string_pretty(config).map_err(SerializationError::from),
             #[cfg(feature = "yaml")]
@@ -293,7 +293,8 @@ impl<'a> ConfigLoader<'a> {
             Format::Ron => ron::to_string(config).map_err(SerializationError::from),
             #[cfg(feature = "kdl")]
             Format::Kdl => Err(SerializationError::UnsupportedExtension("kdl".to_string())),
-        }?;
+        };
+        let str = str?;
 
         let config_dir = self.config_dir()?;
         let file_name = format!("{}.{}", self.file_name, format.extension());
