@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.5.1] - 2025-04-14
+### :sparkles: New Features
+- [`04d7ae8`](https://github.com/JakeStanger/universal-config-rs/commit/04d7ae8d6f8db8030d58f966fe4a73602a85434f) - kdl support *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+### :bug: Bug Fixes
+- [`bcdeb08`](https://github.com/JakeStanger/universal-config-rs/commit/bcdeb086e41173141061e458b7570502c81ca9bc) - cfg flag error (ron in place of kdl) *(PR [#7](https://github.com/JakeStanger/universal-config-rs/pull/7) by [@victorvintorez](https://github.com/victorvintorez))*
+
+### :memo: Documentation Changes
+- [`d6fab06`](https://github.com/JakeStanger/universal-config-rs/commit/d6fab06f2e36397edfb9b3445f5519c1dcd70716) - update CHANGELOG.md for v0.5.0 [skip ci] *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+- [`e1662cd`](https://github.com/JakeStanger/universal-config-rs/commit/e1662cd0dc0d026ee4dd838d276e12c7cec39bd2) - **readme**: remove unneeded main fn from example *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+- [`525e6bb`](https://github.com/JakeStanger/universal-config-rs/commit/525e6bbd84a3c48614c98e2049c9f6ddf5058df2) - **readme**: add missing kdl link *(commit by [@JakeStanger](https://github.com/JakeStanger))*
+
+
 ## [v0.5.0] - 2024-03-30
 ### :sparkles: New Features
 - [`f3f231e`](https://github.com/JakeStanger/universal-config-rs/commit/f3f231e58ccaf93faca4d68cba07556b041f80b0) - make `config_dir` method public *(commit by [@JakeStanger](https://github.com/JakeStanger))*
@@ -88,3 +101,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.4.2]: https://github.com/JakeStanger/universal-config-rs/compare/v0.4.1...v0.4.2
 [v0.4.3]: https://github.com/JakeStanger/universal-config-rs/compare/v0.4.2...v0.4.3
 [v0.5.0]: https://github.com/JakeStanger/universal-config-rs/compare/v0.4.3...v0.5.0
+[v0.5.1]: https://github.com/JakeStanger/universal-config-rs/compare/v0.5.0...v0.5.1
