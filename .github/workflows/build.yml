@@ -9,32 +9,61 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  RUSTFLAGS: '-Dwarnings'
 
 jobs:
-  build:
+  rustfmt:
     runs-on: ubuntu-latest
-
+    name: 'Formatting'
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
+      - uses: actions/checkout@v4
 
       - name: Check formatting
         run: cargo fmt --check
 
-      - name: Clippy
-        uses: actions-rs/clippy-check@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features
+  build:
+    runs-on: ubuntu-latest
+    name: 'Build & Test'
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Build
-        run: cargo build --verbose
+        run: cargo build
 
       - name: Run tests
         uses: actions-rs/cargo@v1
         with:
           command: test
+
+
+  check-no-features:
+    runs-on: ubuntu-latest
+    name: 'Check (No Features)'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check
+        run: cargo check --no-default-features
+
+
+  check-feature:
+    runs-on: ubuntu-latest
+    name: 'Check'
+    strategy:
+      matrix:
+        feature: [json, yaml, toml, corn, ron]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check
+        run: cargo check --no-default-features --features ${{ matrix.feature }}
+
+  clippy:
+    runs-on: ubuntu-latest
+    name: 'Clippy'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clippy
+        run: cargo clippy --all-targets --all-features

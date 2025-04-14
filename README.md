@@ -48,10 +48,9 @@ struct MyConfig {
     foo: String,
 }
 
-fn main() {
-    let config: MyConfig = ConfigLoader::new("my-app").find_and_load().unwrap();
-    println!("{}", config.foo);
-}
+let config: MyConfig = ConfigLoader::new("my-app").find_and_load().unwrap();
+println!("{}", config.foo);
+
 ```
 
 For more advanced usage, please check the [docs](https://docs.rs/universal-config).
