@@ -3,12 +3,10 @@
 mod error;
 
 use crate::error::{
-    DeserializationError, Result, SerializationError, UniversalConfigError as Error,
-    UniversalConfigError,
+    DeserializationError, Result, UniversalConfigError as Error, UniversalConfigError,
 };
 use dirs::{config_dir, home_dir};
 use serde::de::DeserializeOwned;
-use serde::Serialize;
 use std::fs;
 use std::path::{Path, PathBuf};
 use tracing::debug;
@@ -39,6 +37,7 @@ pub enum Format {
 }
 
 impl Format {
+    #[allow(dead_code)] // ignore warning when all feature flags disabled
     const fn extension(&self) -> &str {
         match *self {
             #[cfg(feature = "json")]
@@ -208,6 +207,7 @@ impl<'a> ConfigLoader<'a> {
 
     /// Gets a list of supported and enabled file extensions.
     fn get_extensions(&self) -> Vec<&'static str> {
+        #[allow(unused_mut)] // ignore warning when all feature flags disabled
         let mut extensions = vec![];
 
         for format in self.formats {
@@ -256,9 +256,12 @@ impl<'a> ConfigLoader<'a> {
             "ron" => ron::from_str(str).map_err(DeserializationError::from),
             #[cfg(feature = "kdl")]
             "kdl" => kaydle::serde::from_str(str).map_err(DeserializationError::from),
-            _ => Err(DeserializationError::UnsupportedExtension(
-                extension.to_string(),
-            )),
+            _ => {
+                dbg!(str);
+                Err(DeserializationError::UnsupportedExtension(
+                    extension.to_string(),
+                ))
+            }
         }?;
 
         Ok(res)
@@ -277,7 +280,10 @@ impl<'a> ConfigLoader<'a> {
     /// If a valid config dir cannot be found, an error will be returned.
     ///
     /// If the file cannot be written to the specified path, an error will be returned.
-    pub fn save<T: Serialize>(&self, config: &T, format: &Format) -> Result<()> {
+    #[cfg(feature = "save")]
+    pub fn save<T: serde::Serialize>(&self, config: &T, format: &Format) -> Result<()> {
+        use crate::error::SerializationError;
+
         let str: std::result::Result<String, SerializationError> = match *format {
             #[cfg(feature = "json")]
             Format::Json => serde_json::to_string_pretty(config).map_err(SerializationError::from),

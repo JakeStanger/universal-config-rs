@@ -11,11 +11,14 @@ default = ["json", "yaml", "toml", "corn", "xml", "ron", "kdl"]
 
 # aliases
 # toml does not need to be explicitly included as the dep provides a feature
-json = ["serde_json"]
-yaml = ["serde_yaml"]
-corn = ["libcorn"]
-xml = ["serde-xml-rs"]
-kdl = ["kaydle"]
+json = ["dep:serde_json", "save"]
+yaml = ["dep:serde_yaml", "save"]
+corn = ["dep:libcorn"]
+xml = ["dep:serde-xml-rs", "save"]
+ron = ["dep:ron", "save"]
+kdl = ["dep:kaydle"]
+
+save = []
 
 [dependencies]
 serde = "1.0.197"
